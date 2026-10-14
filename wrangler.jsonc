@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "9dl-legends",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-10-14",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "9dl-legends-db",
+      "database_id": "7aa2cd2e-e70b-491f-a847-3a7f6f9c92a4"
+    }
+  ]
+}
