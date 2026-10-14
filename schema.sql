@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, nickname TEXT NOT NULL UNIQUE COLLATE NOCASE, pass_salt TEXT NOT NULL, pass_hash TEXT NOT NULL, rank INTEGER NOT NULL DEFAULT 1, approved INTEGER NOT NULL DEFAULT 0, avatar TEXT NOT NULL DEFAULT '', bio TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL, last_login TEXT, disabled INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS permissions (user_id TEXT NOT NULL, perm TEXT NOT NULL, enabled INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(user_id,perm));
+CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL, expires_at TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS tasks (id TEXT PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', assignee TEXT, status TEXT NOT NULL DEFAULT 'pending', due_at TEXT, created_by TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS events (id TEXT PRIMARY KEY, title TEXT NOT NULL, start_at TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'tentative', notes TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS announcements (id TEXT PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, created_by TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS audit (id TEXT PRIMARY KEY, actor TEXT, action TEXT NOT NULL, target TEXT, details TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_sessions_exp ON sessions(expires_at);
+CREATE INDEX IF NOT EXISTS idx_audit_time ON audit(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_tasks_assignee ON tasks(assignee);
